@@ -29,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		//WE DELETED @Transactional annotation for all methods, because JpaRepository interface
 		//provides this functionality automatically
 		@Override
+		//@Transactional
 		public List<Employee> findAll() {
 			
 			//DELEGATE CALLS TO THE DAO LAYER
