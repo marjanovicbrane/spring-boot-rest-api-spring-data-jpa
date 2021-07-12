@@ -6,57 +6,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.brane.springboot.crud.dao.EmployeeDAO;
+import com.brane.springboot.crud.dao.EmployeeRepository;
 import com.brane.springboot.crud.entity.Employee;
 
 //THIS IS SERVICE LAYER
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-			//private field employeeDAO, so we can do constructor dependency injection 
+			//private field employeeRepository, because we are using here SPRING DATA JPA
+			//so we can do constructor dependency injection 
 			//to delegate calls from SERVICE LAYER TO THE DAO LAYER
-			private EmployeeDAO employeeDAO;
+			private EmployeeRepository employeeRepository;
 			
 			//constructor injection
 			@Autowired
-			public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
-				employeeDAO = theEmployeeDAO;
+			public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository) {
+				employeeRepository = theEmployeeRepository;
 			}
 
 			
 
+		//WE DELETED @Transactional annotation for all methods, because JpaRepository interface
+		//provides this functionality automatically
 		@Override
-		//annotation for "begin transaction" and "commit transaction"
-		@Transactional
 		public List<Employee> findAll() {
 			
 			//DELEGATE CALLS TO THE DAO LAYER
-			return employeeDAO.findAll();
+			return employeeRepository.findAll();
 		}
 
 
 		@Override
-		@Transactional
 		public Employee findById(int theId) {
 
-			return employeeDAO.findById(theId);
+			return employeeRepository.findById(theId);
 		}
 
 
 		@Override
-		@Transactional
 		public void save(Employee theEmployee) {
 
-			employeeDAO.save(theEmployee);
+			employeeRepository.save(theEmployee);
 
 		}
 
 
 		@Override
-		@Transactional
 		public void deleteById(int theId) {
 
-			employeeDAO.deleteById(theId);
+			employeeRepository.deleteById(theId);
 
 		}
 
